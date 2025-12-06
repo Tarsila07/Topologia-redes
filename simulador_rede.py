@@ -2,7 +2,6 @@ import time
 import random
 import heapq
 
-# --- VARIÁVEIS GLOBAIS ---
 ip_table = {}
 graph = {}
 rede_carregada = False
@@ -13,7 +12,6 @@ def carregar_topologia():
     print("\n[Sistema] Carregando definições de topologia...")
     time.sleep(1)
     
-    # 1. Definição dos Dispositivos (IP -> Nome)
     ip_table = {
         # Core
         "192.168.10.201": "c1", "192.168.10.205": "c1",
@@ -32,7 +30,7 @@ def carregar_topologia():
         "192.168.10.98": "h7", "192.168.10.99": "h8"
     }
 
-    # 2. Grafo (Conexões)
+    # 2. Grafo
     graph = {
         "c1": {"a1": 1, "a2": 1},
         "a1": {"c1": 1, "e1": 2, "e2": 2},
@@ -50,25 +48,20 @@ def carregar_topologia():
     rede_carregada = True
     print("[Sucesso] Topologia carregada. Hosts disponíveis: h1 a h8.")
 
-# --- NOVA FUNÇÃO INTELIGENTE ---
 def resolver_input(entrada):
     """
     Tenta descobrir se o usuário digitou um NOME (h1) ou um IP.
     Retorna uma tupla: (IP_do_Dispositivo, Nome_do_Nó)
     """
-    entrada = entrada.strip() # Remove espaços extras
+    entrada = entrada.strip() 
     
-    # 1. Verifica se é um IP exato que já existe na tabela
     if entrada in ip_table:
         return entrada, ip_table[entrada]
 
-    # 2. Verifica se é um NOME (ex: h1, e1, c1)
-    # Procura na tabela qual IP pertence a esse nome
     for ip, nome in ip_table.items():
         if nome == entrada:
             return ip, nome
             
-    # 3. Não achou nada
     return None, None
 
 def listar_dispositivos():
@@ -77,13 +70,13 @@ def listar_dispositivos():
         return
 
     print("\n--- Tabela de Dispositivos (Nomes & IPs) ---")
-    # Agrupa para mostrar bonito
+    
     mapa = {}
     for ip, nome in ip_table.items():
         if nome not in mapa: mapa[nome] = []
         mapa[nome].append(ip)
     
-    # Exibe Hosts primeiro
+    
     print("HOSTS:")
     for i in range(1, 9):
         nome = f"h{i}"
@@ -117,7 +110,7 @@ def xprobe(origem_input, destino_input):
         print("[Erro] Carregue a rede primeiro.")
         return
 
-    # USA O RESOLVER INTELIGENTE
+    
     ip_orig, nome_orig = resolver_input(origem_input)
     ip_dest, nome_dest = resolver_input(destino_input)
 
@@ -150,7 +143,7 @@ def mostrar_rota(origem_input, destino_input):
         print("[Erro] Carregue a rede primeiro.")
         return
 
-    # USA O RESOLVER INTELIGENTE
+   
     ip_orig, nome_orig = resolver_input(origem_input)
     ip_dest, nome_dest = resolver_input(destino_input)
 
@@ -186,7 +179,6 @@ def main():
         elif opcao == '2':
             listar_dispositivos()
         elif opcao == '3':
-            # Agora pede "Nome ou IP"
             orig = input("Origem (ex: h1 ou IP): ")
             dest = input("Destino (ex: h7 ou IP): ")
             xprobe(orig, dest)
