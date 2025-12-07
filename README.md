@@ -104,6 +104,6 @@ git clone https://github.com/Tarsila07/Topologia-redes.git
 cd Topologia-redes
 ```
 ## 📄 Licença
-Projeto desenvolvido para fins acadêmicos para a disciplina de Redes de Computadores na Universidade de Brasília (UnB).
+Projeto desenvolvido para fins acadêmicos na Universidade de Brasília (UnB).
 
 
